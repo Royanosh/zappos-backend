@@ -4,6 +4,16 @@ const Payments = require('../models/payment.js');
 
 const payment = express.Router();
 
+
+payment.get('/', async(req,res) => {
+    try{
+           const payments = await Payments.find()
+           res.json(payments)
+    }catch(err){
+        res.send('Validation Failed ' + err)
+    }
+})
+
 payment.post("/", async (req,res)=>{
     try {
 
