@@ -333,7 +333,8 @@ const MensClothing = () => {
 
       {/* brand section */}
       <section>
-        <TrandingBrands />
+      <Brand/>
+        {/* <TrandingBrands /> */}
         {/* <Slick/> */}
       </section>
     </>
