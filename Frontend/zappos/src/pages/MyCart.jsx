@@ -21,28 +21,47 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
-import { BsStars } from "react-icons/bs";
+import { BsCheckLg, BsStars } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { deletefromcart, increasecart } from "../Redux/action";
+import { deletefromcart, fetchCartData, increasecart } from "../Redux/action";
 
 const MyCart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const cart = useSelector((state) => state.cart);
-  const [totalAmount, setTotalAmount] = useState(0);
   const dispatch = useDispatch();
+  // console.log(cart);
+  // const [cart, setCart] = useState([]);
+  useEffect(() => {
+    // fetchData();
+    dispatch(fetchCartData());
+  }, []);
+
+  // const fetchData = () => {
+  //   fetch(
+  //     `https://zappos.cyclic.app/cart/${
+  //       JSON.parse(localStorage.getItem("profile"))._id
+  //     }`
+  //   )
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       res.data ? setCart(res.data) : setCart([]);
+  //     });
+  // };
+
+  const [totalAmount, setTotalAmount] = useState(0);
+
   useEffect(() => {
     const getAmount = () => {
-      let amt = cart.reduce((acc, elem) => {
-        return acc + elem.price * elem.count;
+      let amt = cart?.reduce((acc, elem) => {
+        return acc + elem.productId.price * elem.quantity;
       }, 0);
-      setTotalAmount(Math.floor(amt));
+      setTotalAmount(amt ? Math.floor(amt) : 0);
     };
     getAmount();
   }, [cart]);
-
   return (
     <>
       <Button
@@ -55,7 +74,7 @@ const MyCart = () => {
         <Box mr="10px">
           <AiOutlineShoppingCart />
         </Box>{" "}
-        <span>{`${cart.length} ITEMS IN CART`}</span>
+        <span>{`${cart ? cart.length : 0} ITEMS IN CART`}</span>
       </Button>
       <Drawer
         size={"md"}
@@ -79,10 +98,14 @@ const MyCart = () => {
               </Center>
             </Box>
             <Box>
-              {cart.map((elem) => (
+              {cart?.map((elem) => (
                 <Flex
                   p={2}
-                  key={elem.id * Math.random() + Date.now() + elem.imageurl}
+                  key={
+                    elem._id * Math.random() +
+                    Date.now() +
+                    elem.productId.imageurl
+                  }
                 >
                   <Flex>
                     <Box
@@ -104,14 +127,14 @@ const MyCart = () => {
                       <Image
                         w={"150px"}
                         h="200px"
-                        src={elem.imageurl}
+                        src={elem.productId.imageurl}
                         alt="image of product"
                       />
                     </Box>
                     <Box pl="10px">
-                      <Text>{elem.brand}</Text>
+                      <Text>{elem.productId.brand}</Text>
                       <Text>
-                        <b>{elem.desc}</b>
+                        <b>{elem.productId.desc}</b>
                       </Text>
                       <Text>Color: French Blue/Black</Text>
                       <Text>Size: 7</Text>
@@ -120,17 +143,30 @@ const MyCart = () => {
                   </Flex>
 
                   <Box ml="40px">
-                    <Text color={"red"}>${elem.price}</Text>
+                    <Text color={"red"}>${elem.productId.price}</Text>
                     <Text as={"del"}>$195.31</Text>
                     <Select
                       mt={"5px"}
                       mb={"5px"}
                       w={"80px"}
-                      value={elem.count}
+                      value={elem.quantity}
                       onChange={(e) => {
-                        dispatch(
-                          increasecart({ item: elem, qty: +e.target.value })
-                        );
+                        fetch(
+                          `https://zappos.cyclic.app/cart/${elem.productId._id}`,
+                          {
+                            method: "PATCH",
+                            body: JSON.stringify({
+                              userId: elem.userId,
+                              quantity: e.target.value,
+                            }),
+                            headers: {
+                              "Content-type": "application/json",
+                            },
+                          }
+                        ).then((res) => {
+                          console.log(res);
+                          dispatch(fetchCartData());
+                        });
                       }}
                     >
                       <option value="1">1</option>
@@ -154,7 +190,21 @@ const MyCart = () => {
                         borderBottom: "1px solid teal",
                       }}
                       onClick={() => {
-                        dispatch(deletefromcart(elem));
+                        fetch(
+                          `https://zappos.cyclic.app/cart/${elem.productId._id}`,
+                          {
+                            method: "DELETE",
+                            body: JSON.stringify({
+                              userId: elem.userId,
+                            }),
+                            headers: {
+                              "Content-type": "application/json",
+                            },
+                          }
+                        ).then(() => {
+                          dispatch(fetchCartData());
+                        });
+                        // dispatch(deletefromcart(elem));
                       }}
                     >
                       REMOVE
@@ -167,7 +217,7 @@ const MyCart = () => {
 
           <DrawerFooter display={"block"} bg={"#f5f5f5"}>
             <Text mb={"5px"} textAlign={"right"}>
-              Cart Subtotal ({cart.length} Items)${totalAmount}
+              Cart Subtotal ({cart?.length} Items)${totalAmount}
             </Text>
             <Flex>
               <Box>

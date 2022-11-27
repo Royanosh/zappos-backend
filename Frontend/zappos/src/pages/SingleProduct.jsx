@@ -5,7 +5,7 @@ import MensSlick from "../components/MenWomenLAndingPage-components/MensSlick";
 
 import { Center, Spinner, useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { addtocart } from "../Redux/action";
+import { addtocart, fetchCartData } from "../Redux/action";
 import { useNavigate, useParams } from "react-router-dom";
 import Page404 from "./Page404";
 // import { useEffect, useState } from "react";
@@ -18,6 +18,7 @@ const SingleProduct = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   let { cat, id } = useParams();
+  console.log(" id ", id);
   const isauth = useSelector((state) => state.isauth);
   console.log(isauth);
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const SingleProduct = () => {
   useEffect(() => {
     setLoading(true);
     const getData = () => {
-      fetch(`https://zappos-server.herokuapp.com/${cat}/${id}`)
+      fetch(`https://zappos.cyclic.app/products/${id}`)
         .then((res) => res.json())
         .then((res1) => setData(res1))
         .catch((err) => setError(true))
@@ -46,11 +47,27 @@ const SingleProduct = () => {
       position: "top",
     });
   };
-
+  // console.log("userId ", JSON.parse(localStorage.getItem("profile"))._id);
+  const userid = JSON.parse(localStorage.getItem("profile"))._id;
+  console.log("userid ", userid);
   const AddtoCart = () => {
     if (isauth) {
-      dispatch(addtocart(data));
-      Cartalert();
+      fetch(`https://zappos.cyclic.app/cart/${id}`, {
+        method: "POST",
+        body: JSON.stringify({
+          userId: userid,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then(() => {
+          Cartalert();
+          dispatch(fetchCartData());
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       navigate("/signin");
     }
