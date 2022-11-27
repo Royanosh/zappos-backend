@@ -11,6 +11,7 @@ import {
   BRANDFILTER,
   PRICEFILTER,
   CLEARFILTER,
+  SETTOKEN,
 } from "./actionTypes";
 
 import axios from "axios";
@@ -19,13 +20,14 @@ import axios from "axios";
 const cartEndAPi = "http://localhost:3050/cart"
 const initState = {
   error: false,
-  userprofile: {},
-  isauth: false,
+  userprofile: JSON.parse(localStorage.getItem("profile")),
+  isauth: JSON.parse(localStorage.getItem("profile")) ? true : false,
   cart: [],
   shipaddress: "",
   genderarr: [],
   brandarr: [],
   pricearr: [],
+  token: "",
 };
 
 function reducer(state = initState, { type, payload }) {
@@ -59,6 +61,8 @@ function reducer(state = initState, { type, payload }) {
     }
 
     case LOGOUT: {
+      localStorage.removeItem("profile");
+      localStorage.removeItem("token");
       return {
         error: false,
         userprofile: {},
@@ -277,10 +281,18 @@ function reducer(state = initState, { type, payload }) {
 
     case CLEARFILTER: {
       return {
-        ...state, genderarr: [],
+        ...state,
+        genderarr: [],
         brandarr: [],
         pricearr: [],
-      }
+      };
+    }
+
+    case SETTOKEN: {
+      return {
+        ...state,
+        token: payload,
+      };
     }
 
     default: {

@@ -18,12 +18,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { register } from "../Redux/action";
-
+const BASE_URL = "https://zappos.cyclic.app";
 const SignUP = () => {
   const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [extrapss, setExtrapass] = useState("");
 
   // alert functions code starts
@@ -52,14 +52,14 @@ const SignUP = () => {
 
   // alert functions code ends
 
-  useEffect(() => {
-    const getusers = () => {
-      fetch(`https://zappos-server.herokuapp.com/users`)
-        .then((res) => res.json())
-        .then((data) => setUsers(data));
-    };
-    getusers();
-  }, []);
+  // useEffect(() => {
+  //   const getusers = () => {
+  //     fetch(`https://zappos-server.herokuapp.com/users`)
+  //       .then((res) => res.json())
+  //       .then((data) => setUsers(data));
+  //   };
+  //   getusers();
+  // }, []);
 
   const [user, setUser] = useState({
     name: "",
@@ -82,33 +82,69 @@ const SignUP = () => {
   const signUpNow = (e) => {
     e.preventDefault();
 
-    if (password === extrapss) {
-      if (name !== "" && email !== "" && password !== "") {
-        let isPresent = false;
-
-        users.forEach((elem) => {
-          if (elem.email === email) isPresent = true;
-        });
-
-        if (isPresent) {
-          Warning({
-            title: "User already exists",
-            desc: "Try using another Email or try Sign in",
+    if (name !== "" && email !== "" && password !== "" && extrapss !== "") {
+      if (password === extrapss) {
+        fetch(`${BASE_URL}/user/signup`, {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            if (result.status === "success") {
+              Accountcreated();
+              navigate("/signin");
+            } else {
+              Warning({
+                title: result.data,
+                // desc: "All fields are mandotary Please fill all fields",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        } else {
-          Accountcreated();
-          dispatch(register(user));
-          navigate("/signin");
-        }
       } else {
         Warning({
-          title: "Empty Fields found",
-          desc: "All fields are mandotary Please fill all fields",
+          title: "Different Passwords",
+          desc: "Password not matching",
         });
       }
     } else {
-      Warning({ title: "Different Passwords", desc: "Password not matching" });
+      Warning({
+        title: "Wrong Credientials",
+        desc: "All fields are mandotary Please fill all fields",
+      });
     }
+    // if (password === extrapss) {
+    //   if (name !== "" && email !== "" && password !== "") {
+    //     let isPresent = false;
+
+    //     users.forEach((elem) => {
+    //       if (elem.email === email) isPresent = true;
+    //     });
+
+    //     if (isPresent) {
+    //       Warning({
+    //         title: "User already exists",
+    //         desc: "Try using another Email or try Sign in",
+    //       });
+    //     } else {
+    //       Accountcreated();
+    //       dispatch(register(user));
+    //       navigate("/signin");
+    //     }
+    //   } else {
+    //     Warning({
+    //       title: "Empty Fields found",
+    //       desc: "All fields are mandotary Please fill all fields",
+    //     });
+    //   }
+    // } else {
+    //   Warning({ title: "Different Passwords", desc: "Password not matching" });
+    // }
   };
 
   return (
