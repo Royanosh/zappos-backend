@@ -8,6 +8,7 @@ require("dotenv").config();
 const { userRoute } = require("./routes/user.routes");
 const { payment } = require("./routes/payment.routes");
 const cookieParser = require("cookie-parser");
+const productRouter = require("./routes/product.routes");
 
 //middlewares
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use(cors());
 app.use("/user", userRoute);
 app.use("/payment", payment);
 app.use("/cart",cartRoute)
+app.use("/products",productRouter)
 
 const port = process.env.PORT || 3050;
 
