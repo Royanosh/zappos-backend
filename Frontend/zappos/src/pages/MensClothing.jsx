@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import Slick from "../components/MenWomenLAndingPage-components/Slick";
 import "../components/MenWomenLAndingPage-components/mensWomesPage.css";
 import "../components/MenWomenLAndingPage-components/mens.css";
+import Brand from "../components/MenWomenLAndingPage-components/Brand";
 import TrandingBrands from "../components/LandingPage-Components/TrendingBrands";
 const MensClothing = () => {
   const [products, setProducts] = useState([]);

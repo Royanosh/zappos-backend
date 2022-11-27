@@ -7,6 +7,7 @@ const { payment } = require("./routes/payment.routes");
 const cookieParser = require("cookie-parser");
 const productRouter = require("./routes/product.routes");
 const cartRoute = require("./routes/cart.routes");
+const orderRouter = require("./routes/order.routes");
 require("dotenv").config();
 require("./config/passport")(passport);
 
@@ -22,6 +23,7 @@ app.use("/user", userRoute);
 app.use("/payment", payment);
 app.use("/products", productRouter);
 app.use("/cart", cartRoute);
+app.use("/order",orderRouter)
 
 const port = process.env.PORT || 3050;
 
