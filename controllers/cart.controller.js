@@ -27,7 +27,7 @@ exports.getCart=async(req,res)=>{
 
 
 exports.addToCart=async(req,res)=>{
-   
+   console.log(req);
     const userId="637fa76c544dc5035dc76f6f";
     const {productId}=req.params;
     try {

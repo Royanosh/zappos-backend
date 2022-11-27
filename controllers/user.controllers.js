@@ -3,6 +3,9 @@ const usermodel = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const expressJWT = require("express-jwt");
+const dotenv = require("dotenv")
+
+dotenv.config();
 
 //Express Validator for SignUp
 const { validationResult } = require("express-validator");

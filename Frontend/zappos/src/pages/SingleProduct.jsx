@@ -49,7 +49,12 @@ const SingleProduct = () => {
 
   const AddtoCart = () => {
     if (isauth) {
-      dispatch(addtocart(data));
+      const userId = JSON.parse(localStorage.getItem("profile"));
+      // console.log(userId._id);
+      let idData = {
+        data: data, userId: userId._id
+      }
+      dispatch(addtocart(idData));
       Cartalert();
     } else {
       navigate("/signin");

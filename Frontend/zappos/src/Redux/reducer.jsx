@@ -17,7 +17,7 @@ import {
 import axios from "axios";
 
 
-const cartEndAPi = "http://localhost:3050/cart"
+const cartEndAPi = "https://zappos.cyclic.app/cart"
 const initState = {
   error: false,
   userprofile: JSON.parse(localStorage.getItem("profile")),
@@ -75,38 +75,40 @@ function reducer(state = initState, { type, payload }) {
     }
 
     case ADDTOCART: {
-      // axios.post(cartEndAPi, { payload }) need productID
-      //   .then((res) => console.log(res))
-      let ispresent = false;
-      let newcart = [];
-      if (state.cart.length > 0) {
-        newcart = state.cart.map((elem) => {
-          if (elem.desc === payload.desc) {
-            ispresent = true;
-            return { ...elem, count: +elem.count + 1 };
-          } else {
-            return elem;
-          }
-        });
-      }
+      console.log(payload.data);
+      axios.post(`${cartEndAPi}/${payload.userId}`, payload.data)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+      // let ispresent = false;
+      // let newcart = [];
+      // if (state.cart.length > 0) {
+      //   newcart = state.cart.map((elem) => {
+      //     if (elem.desc === payload.desc) {
+      //       ispresent = true;
+      //       return { ...elem, count: +elem.count + 1 };
+      //     } else {
+      //       return elem;
+      //     }
+      //   });
+      // }
 
-      if (!ispresent) {
-        newcart = [...state.cart, { ...payload, count: 1 }];
-      }
-      // console.log(state.userprofile)
-      fetch(
-        `https://zappos-server.herokuapp.com/users/${state.userprofile.id}`,
-        {
-          //update for json integration
-          method: "PATCH",
-          body: JSON.stringify({
-            cart: newcart,
-          }),
-          headers: {
-            "Content-type": "application/json",
-          },
-        }
-      );
+      // if (!ispresent) {
+      //   newcart = [...state.cart, { ...payload, count: 1 }];
+      // }
+      // // console.log(state.userprofile)
+      // fetch(
+      //   `https://zappos-server.herokuapp.com/users/${state.userprofile.id}`,
+      //   {
+      //     //update for json integration
+      //     method: "PATCH",
+      //     body: JSON.stringify({
+      //       cart: newcart,
+      //     }),
+      //     headers: {
+      //       "Content-type": "application/json",
+      //     },
+      //   }
+      // );
 
       return {
         ...state,
