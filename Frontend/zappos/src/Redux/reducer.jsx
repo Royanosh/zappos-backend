@@ -13,6 +13,10 @@ import {
   CLEARFILTER,
 } from "./actionTypes";
 
+import axios from "axios";
+
+
+const cartEndAPi = "http://localhost:3050/cart"
 const initState = {
   error: false,
   userprofile: {},
@@ -67,6 +71,8 @@ function reducer(state = initState, { type, payload }) {
     }
 
     case ADDTOCART: {
+      // axios.post(cartEndAPi, { payload }) need productID
+      //   .then((res) => console.log(res))
       let ispresent = false;
       let newcart = [];
       if (state.cart.length > 0) {
