@@ -1,6 +1,5 @@
 # Zappos Clone
 
-
 ## Functionalities
 
 - Our website is fully responsive for small, medium and large screen.
@@ -61,14 +60,12 @@
 
 - Flickity Carousel
 
-
 # Deployed Links
 
 - [Netlify](https://zappos-official.netlify.app/)
 
 - [GitHub](https://github.com/Royanosh/zappos)
 
-- [Heroku Server](https://zappos-server.herokuapp.com/)
+- [Heroku Server](https://my-json-server-uk9r.onrender.com/)
 
 - [Blog](https://gaurav1.hashnode.dev/zappos-clone)
-

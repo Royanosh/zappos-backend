@@ -26,7 +26,7 @@ const MensClothing = () => {
     slidesToScroll: 6,
   };
   useEffect(() => {
-    fetch(`https://zappos-server.herokuapp.com/womenclothsPro`)
+    fetch(`https://my-json-server-uk9r.onrender.com/womenclothsPro`)
       .then((response) => response.json())
       .then((product) => {
         setProducts(product);
@@ -40,7 +40,7 @@ const MensClothing = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://zappos-server.herokuapp.com/mensPro`)
+    fetch(`https://my-json-server-uk9r.onrender.com/mensPro`)
       .then((response) => response.json())
       .then((product) => {
         setPrice(product);
@@ -53,7 +53,7 @@ const MensClothing = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://zappos-server.herokuapp.com/menscloths`)
+    fetch(`https://my-json-server-uk9r.onrender.com/menscloths`)
       .then((response) => response.json())
       .then((product) => {
         setWomenCloth(product);
@@ -66,7 +66,7 @@ const MensClothing = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://zappos-server.herokuapp.com/menclothsPage`)
+    fetch(`https://my-json-server-uk9r.onrender.com/menclothsPage`)
       .then((response) => response.json())
       .then((product) => {
         setMenCloth(product);
@@ -110,11 +110,11 @@ const MensClothing = () => {
       >
         <div className="manGrid">
           {price.map((womencloths) => (
-            <Link to="/category/menscloths"
-            key={Math.random()*Date.now()+womencloths.id+Math.random()}
+            <Link
+              to="/category/menscloths"
+              key={Math.random() * Date.now() + womencloths.id + Math.random()}
             >
               <div
-                
                 className="card box"
                 style={{ width: "100%", cursor: "pointer" }}
               >
@@ -231,7 +231,9 @@ const MensClothing = () => {
           <div className="manGrid">
             {menCloth.map((womencloths) => (
               <div
-                key={Math.random() + Date.now() * womencloths.id+Math.random()}
+                key={
+                  Math.random() + Date.now() * womencloths.id + Math.random()
+                }
                 onClick={() => handleClick(womencloths)}
                 className="card box boxSize"
                 style={{ cursor: "pointer" }}
@@ -295,7 +297,7 @@ const MensClothing = () => {
           <div className="manAll">
             {womenCloth.map((women) => (
               <div
-                key={Math.random()*Date.now()+women.id+Math.random()}
+                key={Math.random() * Date.now() + women.id + Math.random()}
                 onClick={() => handleClick(women)}
                 className="card box"
                 style={{ width: "100%", cursor: "pointer" }}

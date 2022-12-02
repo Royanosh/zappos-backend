@@ -81,7 +81,7 @@ export const settoken = (payload) => ({
 });
 
 export const register = (user) => (dispatch) => {
-  fetch(`https://zappos-server.herokuapp.com/users`, {
+  fetch(`https://my-json-server-uk9r.onrender.com/users`, {
     method: "POST",
     body: JSON.stringify(user),
     headers: {
@@ -99,7 +99,7 @@ export const fetchCartData = () => (dispatch) => {
     }`
   )
     .then((res) => res.json())
-    .then((res)=> dispatch(addtocart(res.data)))
+    .then((res) => dispatch(addtocart(res.data)))
     .catch((er) => console.log(er));
 };
-//   
+//

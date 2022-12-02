@@ -14,7 +14,7 @@ import {
   useCheckboxGroup,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-const url = `https://zappos-server.herokuapp.com/colors`;
+const url = `https://my-json-server-uk9r.onrender.com/colors`;
 const Colors = (props) => {
   const [colors, setColors] = useState([]);
   // const { value, getCheckboxProps } = useCheckboxGroup();
@@ -76,7 +76,7 @@ const Colors = (props) => {
             <Stack spacing={[1]} direction={["column"]}>
               {colors.map((elem) => (
                 <Checkbox
-                  key={Math.random()*Date.now()+elem.name+Math.random()}
+                  key={Math.random() * Date.now() + elem.name + Math.random()}
                   spacing="0.8rem"
                   {...getCheckboxProps({ value: elem.name })}
                 >

@@ -20,7 +20,7 @@ const WomensClothing = () => {
   };
 
   useEffect(() => {
-    fetch(`https://zappos-server.herokuapp.com/womenclothsPro`)
+    fetch(`https://my-json-server-uk9r.onrender.com/womenclothsPro`)
       .then((response) => response.json())
       .then((product) => {
         setProducts(product);
@@ -34,7 +34,7 @@ const WomensClothing = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://zappos-server.herokuapp.com/pricecell`)
+    fetch(`https://my-json-server-uk9r.onrender.com/pricecell`)
       .then((response) => response.json())
       .then((product) => {
         setPrice(product);
@@ -47,7 +47,7 @@ const WomensClothing = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://zappos-server.herokuapp.com/womencloths`)
+    fetch(`https://my-json-server-uk9r.onrender.com/womencloths`)
       .then((response) => response.json())
       .then((product) => {
         setWomenCloth(product);
@@ -60,7 +60,7 @@ const WomensClothing = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://zappos-server.herokuapp.com/womenclothsPage`)
+    fetch(`https://my-json-server-uk9r.onrender.com/womenclothsPage`)
       .then((response) => response.json())
       .then((product) => {
         setWomenClothPro(product);
@@ -82,11 +82,11 @@ const WomensClothing = () => {
     <>
       {/* women's first page */}
       <div style={style.div}>
-        <h1 style={{ fontSize: "2rem",marginTop:"30px" }}>Women's Clothing</h1>
+        <h1 style={{ fontSize: "2rem", marginTop: "30px" }}>
+          Women's Clothing
+        </h1>
       </div>
-      <div className="container">
-       
-      </div>
+      <div className="container"></div>
 
       <div
         className="container"
@@ -94,11 +94,11 @@ const WomensClothing = () => {
       >
         <div className="manAll">
           {products.map((womencloths) => (
-            <Link to="/category/womencloths"
-            key={Math.random()*Date.now()+womencloths.id+Math.random()}
+            <Link
+              to="/category/womencloths"
+              key={Math.random() * Date.now() + womencloths.id + Math.random()}
             >
               <div
-                
                 onClick={() => {
                   <div>Rajtilak patel</div>;
                 }}
@@ -168,13 +168,37 @@ const WomensClothing = () => {
 
       {/* coats and outwears */}
       <div className="container">
-        <div style={{height:"250px",backgroundColor:"white", width:"350px" ,position:"absolute",marginLeft:"40px",marginTop:"30px",padding:"10px 40px"}} >
-       <h1 style={{fontSize:"23px"}}>New Arrivals: Coats & Outerwear</h1>
-        <h4 style= {{marginTop:"30px"}}>Complete every fall look with our most coveted picks of the season.</h4>
-        <div style={{fontSize:"28px"}}>
-          <button type="button"  style={{fontSize:"18px",backgroundColor:"white",border:"2px solid black",fontWeight:"bold",margin:"20px",padding:"5px 10px"}} >SHOP WOMEN'S COATS & OUTERWEAR</button>
+        <div
+          style={{
+            height: "250px",
+            backgroundColor: "white",
+            width: "350px",
+            position: "absolute",
+            marginLeft: "40px",
+            marginTop: "30px",
+            padding: "10px 40px",
+          }}
+        >
+          <h1 style={{ fontSize: "23px" }}>New Arrivals: Coats & Outerwear</h1>
+          <h4 style={{ marginTop: "30px" }}>
+            Complete every fall look with our most coveted picks of the season.
+          </h4>
+          <div style={{ fontSize: "28px" }}>
+            <button
+              type="button"
+              style={{
+                fontSize: "18px",
+                backgroundColor: "white",
+                border: "2px solid black",
+                fontWeight: "bold",
+                margin: "20px",
+                padding: "5px 10px",
+              }}
+            >
+              SHOP WOMEN'S COATS & OUTERWEAR
+            </button>
+          </div>
         </div>
-       </div>
         <img
           src="https://m.media-amazon.com/images/G/01/2022/womens/WOMENS-COATS-OUTERWEAR-NEW-ARRIVALS-OCTOBER-HERO-1440x700.jpg"
           alt=""
@@ -191,7 +215,7 @@ const WomensClothing = () => {
         <div className="manAll">
           {price.map((price) => (
             <div
-              key={Math.random()*Date.now()+price.id+Math.random()}
+              key={Math.random() * Date.now() + price.id + Math.random()}
               className="card box"
               style={{ width: "100%", cursor: "pointer" }}
             >
@@ -304,7 +328,9 @@ const WomensClothing = () => {
           <div className="manGrid">
             {womenClothPro.map((womencloths) => (
               <div
-                key={Math.random()*Date.now()+womencloths.id+Math.random()}
+                key={
+                  Math.random() * Date.now() + womencloths.id + Math.random()
+                }
                 onClick={() => handleClick(womencloths)}
                 className="card box boxSize"
                 style={{ cursor: "pointer" }}
@@ -367,7 +393,7 @@ const WomensClothing = () => {
           <div className="manAll">
             {womenCloth.map((women) => (
               <div
-                key={Math.random()*Date.now()+women.id+Math.random()}
+                key={Math.random() * Date.now() + women.id + Math.random()}
                 onClick={() => handleClick(women)}
                 className="card box boxSize"
                 style={{ width: "100%", cursor: "pointer" }}
@@ -404,7 +430,7 @@ const WomensClothing = () => {
       </section>
 
       <section>
-        <Brand/>
+        <Brand />
         {/* <TrandingBrands /> */}
       </section>
     </>
